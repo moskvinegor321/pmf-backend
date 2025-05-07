@@ -5,11 +5,19 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://superfluous-let-625859.framer.app',
+  credentials: true
+}));
 app.use(express.json());
 
 // Подключение к MongoDB
-mongoose.connect('mongodb+srv://moskvinegor:OymxtIDohGeOfuwX@cluster0.tq3xlaw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+mongoose.connect('mongodb+srv://moskvinegor:OymxtIDohGeOfuwX@cluster0.tq3xlaw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+  serverSelectionTimeoutMS: 30000,
+  socketTimeoutMS: 45000,
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 // Модель гипотезы
 const Hypothesis = mongoose.model('Hypothesis', {
