@@ -11,13 +11,21 @@ app.use(cors({
 }));
 app.use(express.json());
 
+mongoose.set('serverSelectionTimeoutMS', 60000);
+
 // Подключение к MongoDB
 mongoose.connect('mongodb+srv://moskvinegor:OymxtIDohGeOfuwX@cluster0.tq3xlaw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-  serverSelectionTimeoutMS: 30000,
-  socketTimeoutMS: 45000,
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 60000,
+  socketTimeoutMS: 60000,
+  connectTimeoutMS: 60000
+}).then(() => {
+  console.log('MongoDB connected successfully');
+}).catch(err => {
+  console.error('MongoDB connection error:', err);
 });
+
 
 // Модель гипотезы
 const Hypothesis = mongoose.model('Hypothesis', {
